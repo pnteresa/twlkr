@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/toolbar_main"/>
+    <include layout="@layout/toolbar_main"
+        android:id="@+id/mLtoolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"></FrameLayout>
-</LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_above="@+id/mAVad"
+        android:layout_below="@+id/mLtoolbar"
+        android:id="@+id/mFLframe">
+
+
+    </FrameLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/mAVad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_unit_id">
+    </com.google.android.gms.ads.AdView>
+</RelativeLayout>
