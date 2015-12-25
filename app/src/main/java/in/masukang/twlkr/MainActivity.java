@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
             ft.commit();
         }
         else {
-            Log.d("sp1 ","not null");
+            Log.d("sp1 ", "not null");
             showHomeTweet(followingSet);
         }
     }
@@ -77,5 +77,11 @@ public class MainActivity extends AppCompatActivity{
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.mFLframe,fragment);
         ft.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        System.exit(0);
     }
 }
