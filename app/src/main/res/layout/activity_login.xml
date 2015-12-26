@@ -16,30 +16,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Slip-free Twitter Stalker/Walker app"
+        android:text="Twitter Stalker/Walker app"
         android:id="@+id/textView"
         android:textColor="@color/white"
         android:fontFamily="sans-serif-thin"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:layout_marginBottom="32dp"
         android:layout_marginTop="16dp"
         android:gravity="center_horizontal" />
-
-    <com.twitter.sdk.android.core.identity.TwitterLoginButton
-        android:id="@+id/mTLBlogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/mTVstatus"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone" />
 
     <Button
         android:layout_width="wrap_content"

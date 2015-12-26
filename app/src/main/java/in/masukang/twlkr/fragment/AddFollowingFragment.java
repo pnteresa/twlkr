@@ -1,9 +1,14 @@
 package in.masukang.twlkr.fragment;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -22,17 +27,34 @@ import in.masukang.twlkr.utils.Constants;
 @EFragment(R.layout.fragment_add_following)
 public class AddFollowingFragment extends Fragment {
     @ViewById
-    EditText mETusername;
+    LinearLayout mLLrowContainer;
 
     Set<String> mSfollowing = new HashSet<>();
+
+    @Click(R.id.mBadd)
+    void add() {
+        LayoutInflater layoutInflater =
+                (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View addView = layoutInflater.inflate(R.layout.row_item_add_following, null);
+        final EditText textOut = (EditText)addView.findViewById(R.id.mETusername);
+        Button buttonRemove = (Button)addView.findViewById(R.id.mBremove);
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ((LinearLayout) addView.getParent()).removeView(addView);
+            }
+        });
+        mLLrowContainer.addView(addView, 0);
+    }
 
     @Click(R.id.mBfollow)
     void saveFollowing() {
         SharedPreferences sp = getActivity().getSharedPreferences(Constants.FOLLOWING_DATA, 0);
         SharedPreferences.Editor ed = sp.edit();
-        Log.d("et null",(mETusername==null)+"" );
-        Log.d("et txt null",(mETusername.getText()==null)+"" );
-        mSfollowing.add(mETusername.getText().toString());
+
+        //parse from mLLrowContainer here
+
         ed.putStringSet(Constants.FOLLOWING_ID_SET, mSfollowing);
         ed.commit();
 

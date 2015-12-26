@@ -5,21 +5,27 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.twitter.sdk.android.core.AppSession;
 import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.tweetui.CollectionTimeline;
-import com.twitter.sdk.android.tweetui.Timeline;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
-import com.twitter.sdk.android.tweetui.UserTimeline;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.tweetui.TweetViewAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import in.masukang.twlkr.fragment.AddFollowingFragment;
@@ -27,16 +33,22 @@ import in.masukang.twlkr.fragment.AddFollowingFragment_;
 import in.masukang.twlkr.fragment.HomeTweetFragment;
 import in.masukang.twlkr.fragment.HomeTweetFragment_;
 import in.masukang.twlkr.utils.Constants;
+import in.masukang.twlkr.utils.GuestSessionManager;
+import in.masukang.twlkr.utils.Utils;
 
 /**
  * Created by teresa on 12/25/2015.
  */
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     @ViewById
     AdView mAVad;
     @ViewById
     FrameLayout mFLframe;
+
+    int i;
+    List<Tweet> tweets = new ArrayList<>();
+    Set<String> followingSet = new HashSet<>();
 
     @AfterViews
     void init() {
@@ -50,32 +62,67 @@ public class MainActivity extends AppCompatActivity{
             Log.d("sp1 ", "null");
             AddFollowingFragment fragment = new AddFollowingFragment_();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.mFLframe,fragment);
+            ft.add(R.id.mFLframe, fragment);
             ft.commit();
-        }
-        else {
-            Log.d("sp1 ","not null");
+        } else {
+            Log.d("sp1 ", "not null");
             showHomeTweet(followingSet);
         }
     }
 
     public void showHomeTweet(Set<String> followingSet) {
-        HomeTweetFragment fragment = new HomeTweetFragment_();
+        final int len = followingSet.size();
+        i = 0;
+        AppSession session = GuestSessionManager.session;
 
-        TweetTimelineListAdapter.Builder builder = new TweetTimelineListAdapter.Builder(this);
         for (String user : followingSet) {
-            Log.d("user ",user);
-            final UserTimeline userTimeline = new UserTimeline.Builder()
-                    .screenName(user)
-                    .build();
-            builder.setTimeline(userTimeline);
-        }
-        TweetTimelineListAdapter adapter = builder.build();
-        fragment.setAdapter(adapter);
+            TwitterCore.getInstance().getApiClient(session).getStatusesService()
+                    .userTimeline(null, user, Constants.MAX_TWEET_FETCH_PER_USER, null, null, null, null, null, null,
+                            new Callback<List<Tweet>>() {
+                                @Override
+                                public void success(Result<List<Tweet>> result) {
+                                    for (Tweet t : result.data) {
+                                        tweets.add(t);
+                                    }
+                                    checkFinish(++i, len);
+                                }
 
-        fragment.setmSfollowing(followingSet, this);
+                                @Override
+                                public void failure(TwitterException exception) {
+                                    android.util.Log.d("main_activity", "exception " + exception);
+                                }
+                            });
+        }
+    }
+
+    void checkFinish(int i, int size) {
+        if (i == size) {
+            Collections.sort(tweets, new TweetByTimeComparator());
+            showTweet();
+        }
+    }
+
+    void showTweet() {
+        HomeTweetFragment fragment = new HomeTweetFragment_();
+        TweetViewAdapter adapter = new TweetViewAdapter(this, tweets);
+        fragment.setAdapter(adapter);
+        fragment.setmSfollowing(followingSet);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.mFLframe,fragment);
+        ft.add(R.id.mFLframe, fragment);
         ft.commit();
+    }
+
+    class TweetByTimeComparator implements Comparator<Tweet> {
+        @Override
+        public int compare(Tweet t1, Tweet t2) {
+            Date d1 = Utils.convertTsToDate(t1.createdAt);
+            Date d2 = Utils.convertTsToDate(t2.createdAt);
+            return d2.compareTo(d1);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

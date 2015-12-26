@@ -15,6 +15,7 @@
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 *.iml
+/app/src/main/java/in/masukang/twlkr/utils/KeyConstants.java
 
 #Built application files
 *.apk

@@ -1,13 +1,10 @@
 package in.masukang.twlkr.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.Adapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
-import com.twitter.sdk.android.tweetui.UserTimeline;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -28,29 +25,28 @@ public class HomeTweetFragment extends Fragment {
     @ViewById
     ListView mLVmain;
 
-    Set<String> mSfollowing;
-    TweetTimelineListAdapter adapter;
+    Set<String> mFollowingSet;
+    ListAdapter mAdapter;
 
     @AfterViews
     void init() {
-        mLVmain.setAdapter(adapter);
+        mLVmain.setAdapter(mAdapter);
     }
 
-    public void setmSfollowing(Set<String> following, Context context) {
-        this.mSfollowing = following;
-        TweetTimelineListAdapter.Builder builder = new TweetTimelineListAdapter.Builder(context);
 
-        for (String user : following) {
-            Log.d("user ",user);
-            final UserTimeline userTimeline = new UserTimeline.Builder()
-                    .screenName(user)
-                    .build();
-            builder.setTimeline(userTimeline);
-        }
-        adapter = builder.build();
+    public void setAdapter(ListAdapter adapter) {
+        this.mAdapter = adapter;
     }
 
-    public void setAdapter(TweetTimelineListAdapter adapter) {
-        this.adapter = adapter;
+    public Set<String> getmSfollowing() {
+        return mFollowingSet;
+    }
+
+    public void setmSfollowing(Set<String> mSfollowing) {
+        this.mFollowingSet = mSfollowing;
+    }
+
+    public ListAdapter getAdapter() {
+        return mAdapter;
     }
 }
