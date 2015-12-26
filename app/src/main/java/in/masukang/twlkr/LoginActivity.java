@@ -31,6 +31,7 @@ import org.androidannotations.annotations.ViewById;
 import in.masukang.twlkr.fragment.HomeTweetFragment;
 import in.masukang.twlkr.fragment.HomeTweetFragment_;
 import in.masukang.twlkr.utils.Constants;
+import in.masukang.twlkr.utils.KeyConstants;
 import io.fabric.sdk.android.Fabric;
 import android.support.v4.app.FragmentTransaction;
 
@@ -73,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(Constants.TWITTER_KEY, Constants.TWITTER_SECRET);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(KeyConstants.TWITTER_KEY, KeyConstants.TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_login);
     }
