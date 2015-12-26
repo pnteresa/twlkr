@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         fragment.setAdapter(adapter);
         fragment.setmSfollowing(followingSet);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.mFLframe, fragment);
-        ft.commit();
+        ft.replace(R.id.mFLframe, fragment);
+        ft.commitAllowingStateLoss();
     }
 
     class TweetByTimeComparator implements Comparator<Tweet> {

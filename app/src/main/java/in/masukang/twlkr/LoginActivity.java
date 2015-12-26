@@ -1,11 +1,16 @@
 package in.masukang.twlkr;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
@@ -15,7 +20,6 @@ import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -31,6 +35,12 @@ import io.fabric.sdk.android.Fabric;
 public class LoginActivity extends AppCompatActivity {
     Context mContext;
 
+    @ViewById
+    ProgressBar mPBloading;
+
+    @ViewById
+    Button mBcontinue;
+
     @AfterViews
     void init() {
         mContext = this;
@@ -42,15 +52,29 @@ public class LoginActivity extends AppCompatActivity {
                 GuestSessionManager.setSession(session);
 
                 SharedPreferences sp1 = mContext.getSharedPreferences(Constants.FOLLOWING_DATA, MODE_WORLD_READABLE);
+                mPBloading.setVisibility(View.GONE);
                 if (sp1.getStringSet(Constants.FOLLOWING_ID_SET, null) != null) {
                     Intent intent = new Intent(mContext, MainActivity_.class);
                     startActivity(intent);
+                } else {
+                    mBcontinue.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void failure(TwitterException e) {
-                Toast.makeText(mContext, "Could not get guest Twitter session", Toast.LENGTH_SHORT).show();
+                mPBloading.setVisibility(View.GONE);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                builder.setMessage("Couldn't connect to Twitter")
+                        .setCancelable(false).setTitle("Error")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
                 e.printStackTrace();
             }
         });
@@ -65,6 +89,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //make your own KeyConstants.java consisting TWITTER_KEY and TWITTER_SECRET variable
         TwitterAuthConfig authConfig = new TwitterAuthConfig(KeyConstants.TWITTER_KEY, KeyConstants.TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
 

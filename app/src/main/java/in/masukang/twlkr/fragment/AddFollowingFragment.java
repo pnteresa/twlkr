@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -36,8 +37,7 @@ public class AddFollowingFragment extends Fragment {
         LayoutInflater layoutInflater =
                 (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.row_item_add_following, null);
-        final EditText textOut = (EditText)addView.findViewById(R.id.mETusername);
-        Button buttonRemove = (Button)addView.findViewById(R.id.mBremove);
+        Button buttonRemove = (Button) addView.findViewById(R.id.mBremove);
         buttonRemove.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -53,7 +53,27 @@ public class AddFollowingFragment extends Fragment {
         SharedPreferences sp = getActivity().getSharedPreferences(Constants.FOLLOWING_DATA, 0);
         SharedPreferences.Editor ed = sp.edit();
 
-        //parse from mLLrowContainer here
+        int childCount = mLLrowContainer.getChildCount();
+        Log.d("aff",""+childCount);
+        if (childCount == 0) {
+            Toast.makeText(getActivity(), R.string.add_more_user, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        for (int i = 0; i < childCount; i++) {
+            View childView = mLLrowContainer.getChildAt(i);
+            EditText usernameE = (EditText) (childView.findViewById(R.id.mETusername));
+            String username = usernameE.getText().toString();
+            Log.d("aff",username+" hehe");
+            if (username.length() != 0) {
+                mSfollowing.add(username);
+            }
+        }
+        Log.d("afs",""+mSfollowing.size());
+        if (mSfollowing.size() == 0) {
+            Toast.makeText(getActivity(), R.string.add_more_user, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         ed.putStringSet(Constants.FOLLOWING_ID_SET, mSfollowing);
         ed.commit();
