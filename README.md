@@ -2,7 +2,7 @@
 Android app to see timeline without signing up on Twitter. Made with <a href="http://fabric.io">Fabric</a>
 
 ####Download Alpha version: 
-<a href="https://play.google.com/store/apps/details?id=in.masukang.twlkr&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"  width="150px"/></a>
+<a href="https://play.google.com/apps/testing/in.masukang.twlkr"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"  width="150px"/></a>
 
 ###NOTE: This repository is made public for educational purpose only
 
