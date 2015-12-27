@@ -6,4 +6,5 @@
     <color name="toolbar_bg">#26A69A</color>
     <color name="dark_red">#B71C1C</color>
     <color name="teal">#009688</color>
+    <color name="ColorPrimaryDark">#004D40</color>
 </resources>

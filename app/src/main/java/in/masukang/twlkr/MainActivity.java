@@ -4,7 +4,9 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     AdView mAVad;
     @ViewById
     FrameLayout mFLframe;
+    @ViewById
+    ProgressBar mPBloading;
 
     int i;
     List<Tweet> tweets = new ArrayList<>();
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     @AfterViews
     void init() {
+        mPBloading.setVisibility(View.VISIBLE);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAVad.loadAd(adRequest);
 
@@ -68,13 +73,15 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "line:68 not null");
             showHomeTweet(followingSet);
         }
+        mPBloading.setVisibility(View.GONE);
     }
 
     /**
      * Fetch all username in {@code followingSet} 's tweets to {@link #tweets}
       * @param followingSet set of username
      */
-    void showHomeTweet(Set<String> followingSet) {
+    public void showHomeTweet(Set<String> followingSet) {
+        mPBloading.setVisibility(View.VISIBLE);
         final int len = followingSet.size();
         i = 0;
         AppSession session = GuestSessionManager.session;
@@ -119,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         TweetViewAdapter adapter = new TweetViewAdapter(this, tweets);
         fragment.setAdapter(adapter);
         fragment.setmSfollowing(followingSet);
+        mPBloading.setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mFLframe, fragment);
         ft.commitAllowingStateLoss();

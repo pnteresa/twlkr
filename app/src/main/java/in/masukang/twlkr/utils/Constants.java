@@ -11,5 +11,5 @@ public class Constants {
     public static final String FOLLOWING_DATA= "following_data";
     public static final String FOLLOWING_ID_SET= "following_id_set";
 
-    public static final int MAX_TWEET_FETCH_PER_USER = 50;
+    public static final int MAX_TWEET_FETCH_PER_USER = 15;
 }

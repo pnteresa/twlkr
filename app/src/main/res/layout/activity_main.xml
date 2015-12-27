@@ -28,4 +28,15 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/ad_unit_id">
     </com.google.android.gms.ads.AdView>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mPBloading"
+        android:layout_gravity="center"
+        android:layout_below="@+id/mLtoolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:indeterminate="true" />
 </RelativeLayout>
