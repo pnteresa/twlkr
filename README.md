@@ -1,7 +1,10 @@
 # <img src="https://raw.githubusercontent.com/pnteresa/twlkr/develop/app/src/main/res/mipmap-mdpi/ic_launcher.png"/> twlkr
 Android app to see timeline without signing up on Twitter. Made with <a href="http://fabric.io">Fabric</a>
 
-###This repository is made public for educational purpose only
+####Download Alpha version: 
+<a href="https://play.google.com/store/apps/details?id=in.masukang.twlkr&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"  width="150px"/></a>
+
+###NOTE: This repository is made public for educational purpose only
 
 ####Current Features (v1.0.0-alpha)
 1. Unlimited users to follow (but , and )
