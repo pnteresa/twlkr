@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.masukang.twlkr" >
+    package="in.masukang.twlkr"
+    android:versionCode="1"
+    android:versionName="1.0.0-alpha">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,8 +20,9 @@
             </intent-filter>
         </activity>
         <activity
-        android:name=".MainActivity_"
-        android:label="@string/app_name" />
+            android:name=".MainActivity_"
+            android:label="@string/app_name" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3d1f0085f847b42b7211a208b9f6e07e8c4982ea" />
