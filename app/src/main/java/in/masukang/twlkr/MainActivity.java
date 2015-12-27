@@ -55,22 +55,26 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAVad.loadAd(adRequest);
 
-        SharedPreferences sp1 = this.getSharedPreferences(Constants.FOLLOWING_DATA, MODE_WORLD_READABLE);
+        SharedPreferences sp = this.getSharedPreferences(Constants.FOLLOWING_DATA, MODE_WORLD_READABLE);
 
-        Set<String> followingSet = sp1.getStringSet(Constants.FOLLOWING_ID_SET, null);
+        Set<String> followingSet = sp.getStringSet(Constants.FOLLOWING_ID_SET, null);
         if (followingSet == null) {
-            Log.d("sp1 ", "null");
+            Log.d("MainActivity", "line:62 null");
             AddFollowingFragment fragment = new AddFollowingFragment_();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.mFLframe, fragment);
             ft.commit();
         } else {
-            Log.d("sp1 ", "not null");
+            Log.d("MainActivity", "line:68 not null");
             showHomeTweet(followingSet);
         }
     }
 
-    public void showHomeTweet(Set<String> followingSet) {
+    /**
+     * Fetch all username in {@code followingSet} 's tweets to {@link #tweets}
+      * @param followingSet set of username
+     */
+    void showHomeTweet(Set<String> followingSet) {
         final int len = followingSet.size();
         i = 0;
         AppSession session = GuestSessionManager.session;
@@ -89,12 +93,17 @@ public class MainActivity extends AppCompatActivity {
 
                                 @Override
                                 public void failure(TwitterException exception) {
-                                    android.util.Log.d("main_activity", "exception " + exception);
+                                    android.util.Log.d("MainActivity", "line 92: exception " + exception);
                                 }
                             });
         }
     }
 
+    /**
+     * check if all tweets are fetched
+     * @param i curent tweets size
+     * @param size expected size
+     */
     void checkFinish(int i, int size) {
         if (i == size) {
             Collections.sort(tweets, new TweetByTimeComparator());
@@ -102,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * set adapter from tweets and show HomeTweetFragment
+     */
     void showTweet() {
         HomeTweetFragment fragment = new HomeTweetFragment_();
         TweetViewAdapter adapter = new TweetViewAdapter(this, tweets);
@@ -112,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
+    /**
+     * compare tweets by date
+     */
     class TweetByTimeComparator implements Comparator<Tweet> {
         @Override
         public int compare(Tweet t1, Tweet t2) {

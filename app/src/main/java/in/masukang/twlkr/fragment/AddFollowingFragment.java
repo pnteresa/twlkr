@@ -38,6 +38,8 @@ public class AddFollowingFragment extends Fragment {
                 (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View addView = layoutInflater.inflate(R.layout.row_item_add_following, null);
         Button buttonRemove = (Button) addView.findViewById(R.id.mBremove);
+        EditText input = (EditText) addView.findViewById(R.id.mETusername);
+        input.requestFocus();
         buttonRemove.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -54,7 +56,7 @@ public class AddFollowingFragment extends Fragment {
         SharedPreferences.Editor ed = sp.edit();
 
         int childCount = mLLrowContainer.getChildCount();
-        Log.d("aff",""+childCount);
+        Log.d("AddFollowingFragment", "child count: " + childCount);
         if (childCount == 0) {
             Toast.makeText(getActivity(), R.string.add_more_user, Toast.LENGTH_SHORT).show();
             return;
@@ -64,12 +66,11 @@ public class AddFollowingFragment extends Fragment {
             View childView = mLLrowContainer.getChildAt(i);
             EditText usernameE = (EditText) (childView.findViewById(R.id.mETusername));
             String username = usernameE.getText().toString();
-            Log.d("aff",username+" hehe");
             if (username.length() != 0) {
                 mSfollowing.add(username);
             }
         }
-        Log.d("afs",""+mSfollowing.size());
+        Log.d("AddFollowingFragment", "non-empty text: " + mSfollowing.size());
         if (mSfollowing.size() == 0) {
             Toast.makeText(getActivity(), R.string.add_more_user, Toast.LENGTH_SHORT).show();
             return;

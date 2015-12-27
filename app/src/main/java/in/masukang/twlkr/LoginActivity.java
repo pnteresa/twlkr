@@ -1,17 +1,15 @@
 package in.masukang.twlkr;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.AppSession;
@@ -27,19 +25,18 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import in.masukang.twlkr.utils.Constants;
-import in.masukang.twlkr.utils.KeyConstants;
 import in.masukang.twlkr.utils.GuestSessionManager;
+import in.masukang.twlkr.utils.KeyConstants;
 import io.fabric.sdk.android.Fabric;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
-    Context mContext;
-
     @ViewById
     ProgressBar mPBloading;
-
     @ViewById
     Button mBcontinue;
+
+    Context mContext;
 
     @AfterViews
     void init() {
@@ -51,9 +48,9 @@ public class LoginActivity extends AppCompatActivity {
                 AppSession session = appSessionResult.data;
                 GuestSessionManager.setSession(session);
 
-                SharedPreferences sp1 = mContext.getSharedPreferences(Constants.FOLLOWING_DATA, MODE_WORLD_READABLE);
+                SharedPreferences sp = mContext.getSharedPreferences(Constants.FOLLOWING_DATA, MODE_WORLD_READABLE);
                 mPBloading.setVisibility(View.GONE);
-                if (sp1.getStringSet(Constants.FOLLOWING_ID_SET, null) != null) {
+                if (sp.getStringSet(Constants.FOLLOWING_ID_SET, null) != null) {
                     Intent intent = new Intent(mContext, MainActivity_.class);
                     startActivity(intent);
                 } else {
