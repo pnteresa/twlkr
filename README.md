@@ -7,7 +7,7 @@ Android app to see timeline without signing up on Twitter. Made with <a href="ht
 ###NOTE: This repository is made public for educational purpose only
 
 ####Current Features (v1.0.0-alpha)
-1. Unlimited users to follow (but , and )
+1. Unlimited users to follow (but see <a href="#current-limitation">limitation</a>)
 2. No sign in required (<< is this a feature? lol)
 
 
