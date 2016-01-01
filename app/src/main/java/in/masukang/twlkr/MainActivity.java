@@ -113,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
      */
     void checkFinish(int i, int size) {
         if (i == size) {
+            if (tweets.size() > Constants.MAX_TWEET_FETCH_PER_USER)
+                tweets.subList(0,Constants.MAX_TWEET_FETCH_PER_USER);
             Collections.sort(tweets, new TweetByTimeComparator());
             showTweet();
         }
