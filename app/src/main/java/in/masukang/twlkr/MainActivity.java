@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.mFLframe, fragment);
             ft.commit();
+            mPBloading.setVisibility(View.GONE);
         } else {
             Log.d("MainActivity", "line:68 not null");
             showHomeTweet(followingSet);
         }
-        mPBloading.setVisibility(View.GONE);
     }
 
     /**
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mFLframe, fragment);
         ft.commitAllowingStateLoss();
+        mPBloading.setVisibility(View.GONE);
     }
 
     /**

@@ -4,7 +4,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     
-    <string name="ad_unit_id">ca-app-pub-4081574897341153/6131899029</string>
+    <!--<string name="ad_unit_id">ca-app-pub-4081574897341153/6131899029</string>-->
+    <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <string name="add_more_user">Please add at least 1 username</string>
 </resources>
